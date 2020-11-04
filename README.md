@@ -4,7 +4,7 @@
 - 支持created、mounted、update
 
 ## Run Examples
-[在线demo](https://walkjs.github.io/MVVM/)
+[在线demo](http://139.9.192.234:5555/)
 
 ```
 yarn or npm i 
