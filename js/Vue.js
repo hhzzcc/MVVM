@@ -1,27 +1,28 @@
 
-import { Observe } from './Observer.js';
-import { Compile } from './Compiler.js';
+import { Observer } from './Observer.js';
+import { Compiler } from './Compiler.js';
 export class Vue {
-    constructor($vm) {
-        this.$vm = $vm
-        this.$options = Object.assign($vm.data, $vm.methods)
-        this.$el = document.querySelectorAll($vm.el)[0];
-        this.$data = $vm.data;
-        this.$methods = $vm.methods;
-        this._init();
+    constructor(options) {
+        this._options = options;
+        this.$options = Object.assign(options.data, options.methods);
+        this.$el = document.querySelectorAll(options.el)[0];
+        this.$data = options.data;
+        this.$methods = options.methods;
+        this.init();
     }
-    _init() {
-        const observe = new Observe();
-        const compile = new Compile();
-        this.callHook('created')
-        observe._observe(this.$data);
-        compile._compile(this.$el, this);
-        this.callHook('mounted')
+
+    init() {
+        const observer = new Observer();
+        const compiler = new Compiler(this);
+        this.callHook('created');
+        observer.observe(this.$data);
+        compiler.compile(this.$el);
+        this.callHook('mounted');
     }
-    callHook(str) {
-        if (this.$vm[str]) {
-            console.log(this.$vm[str])
-            this.$vm[str].call(this.$options)
+
+    callHook(str, ...arg) {
+        if (this._options[str]) {
+            this._options[str].call(this.$options, ...arg);
         }
     }
 }

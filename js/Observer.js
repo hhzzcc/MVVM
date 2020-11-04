@@ -1,38 +1,36 @@
 import { Dep } from "./Dep.js";
-import { target } from './Watcher.js';
+import { target } from './VDom.js';
 
-export class Observe {
-    constructor () {
-
-    }
+export class Observer {
+    constructor () {}
 
     // 数据监听
-    _observe (data) {
+    observe (data) {
         if (!data || typeof data !== 'object') {
             return;
         }
-        Object.keys(data).forEach(key => {
-            let dep = new Dep();
-            let val = data[key];
-            this._observe(val);
 
-            Object.defineProperty (data, key, {
+        for(const key in data) {
+            const dep = new Dep();
+            let val = data[key];
+            this.observe(val);
+
+            Object.defineProperty(data, key, {
                 enumerable: true,
                 configurable: true,
-
                 get () {
-                    // 初始化将watcher添加进来
-                    target && dep._addSub(target);
+                    target && dep.addTarget(target);
                     return val;
                 },
+
                 set (newVal) {
                     if (newVal !== val) {
                         val = newVal;
                         // 数据变动通知更新视图
-                        dep._notify(newVal);
+                        dep.notify(newVal);
                     }
                 }
             })
-        })
+        }
     }
 }

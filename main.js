@@ -7,23 +7,24 @@ new Vue({
         obj: {
             a: 1
         },
+        input: ''
     },
     created(){
-        console.log(document.getElementById('app').innerHTML)
-        console.log(this.number)
+        console.log('created', this.number);
     },
     mounted(){
-        console.log(document.getElementById('app').innerHTML)
-        console.log(this.number)
+        console.log('mounted', this.number);
+    },
+    update(key, value) {
+        console.log('update', key, value);
     },
     methods: {
-        doClick() {
+        click() {
             this.obj.a ++;
             this.number ++;
-            this.print('触发了函数间的调用')
         },
-        print(str) {
-            console.log(str)
-        }
+        mouseover() {
+            this.click();
+        },
     }
 });

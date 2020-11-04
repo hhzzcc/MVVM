@@ -2,17 +2,20 @@
 
 export class Dep {
     constructor() {
-        this.subs = [];
+        this.vdoms = [];
     }
+
     // 将watcher添加进来
-    _addSub(sub) {
-        this.subs.push(sub);
+    addTarget(vdom) {
+        this.vdoms.push(vdom);
     }
+
     // 更新视图
-    _notify(newVal) {
-        this.subs.forEach(val => {
-            val.value = newVal;
-            val._update();
-        })
+    notify(newVal) {
+        // 一个数据可能被多个dom绑定
+        this.vdoms.forEach(vdom => {
+            vdom.setValue(newVal);
+            vdom.update();
+        });
     }
 }

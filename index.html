@@ -2,17 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>MVVM</title>
+    <style>
+        * {
+            color: #333;
+            font-size: 16px;
+        }
+
+        input,
+        button,
+        p {
+            font-weight: bolder;
+            padding: 5px 10px;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
-        点击按钮试试
-        <button @click="doClick">{{number}}</button>
+        点击按钮
+        <button @click="click">{{number}}</button>
         <br><br>
-        鼠标放按钮上去试试
-        <button @mouseover="doClick">{{number}}</button>
+        鼠标放按钮上
+        <button @mouseover="mouseover">{{number}}</button>
         <br><br>
-        <input type="text" v-model="number">
+        <input type="text" v-model="input" placeholder="输入些东西">
+        <button>{{input}}</button>
         <p>{{number}}</p>
         <p>{{obj.a}}</p>
     </div>
